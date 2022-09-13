@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    public GameObject groundCheck;
+    
     private bool isGrounded;
 
     public string characterName;
@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 velocity;
     public float smoothTime = 0.2f;
+    private BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
     public void Start()
@@ -44,12 +45,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) == true)
         {
             isJumpPressed = true;
-            animator.SetTrigger("DoJump");
+            animator.SetTrigger("Jump");
             audioSource.PlayOneShot(audioClip);
         }
 
-        animator.SetBool("IsGrounded", isGrounded);
-        animator.SetFloat("Speed", Mathf.Abs(moveDirection));
+        animator.SetBool("Idle", isGrounded);
+        animator.SetFloat("Walk", Mathf.Abs(moveDirection));
     }
 
     //FixedUpdate 
@@ -69,19 +70,11 @@ public class PlayerMovement : MonoBehaviour
         isJumpPressed = false;
     }
 
-    private void GroundCheck()
+    private bool isGrounded()
     {
-        isGrounded = false;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.transform.position, 0.2f);
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].gameObject.layer == 3 && rigidBody2D.velocity.y <= 0)
-            {
-                isGrounded = true;
-            }
-        }
+        RaycastHit2D raycasrHit = Physics2D.BoxCast(boxo);
+        return false;
     }
-
     private void Move(Vector3 moveDirection, bool isJumpPressed)
     {
         rigidBody2D.velocity = Vector3.SmoothDamp(rigidBody2D.velocity, moveDirection, ref velocity, smoothTime);
