@@ -5,17 +5,19 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private float attackCooldown;
-    [SerializeField] private Transform fireballPoint;
+    [SerializeField] private Transform FirePoint;
     [SerializeField] private GameObject[] fireballs;
+
     private Animator anim;
     private RealPlayerMovement playerMovement;
     private float cooldownTimer = Mathf.Infinity;
 
-    private void Start()
+    private void Awake()
     {
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<RealPlayerMovement>();
     }
+
     private void Update()
     {
         if (Input.GetButton("Fire1") && cooldownTimer > attackCooldown && playerMovement.canAttack())
@@ -29,11 +31,18 @@ public class PlayerAttack : MonoBehaviour
         anim.SetTrigger("attack");
         cooldownTimer = 0;
 
-        fireballs[FindFIreball()].transform.position = fireballPoint.position;
-        fireballs[FindFIreball()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+        fireballs[FindFireball()].transform.position = FirePoint.position;
+        //fireballs[FindFireball()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+        if(playerMovement.isFacingRight == true)
+        {
+            fireballs[FindFireball()].GetComponent<Projectile>().SetDirection(1f);
+        }
+        else
+        {
+            fireballs[FindFireball()].GetComponent<Projectile>().SetDirection(-1f);
+        }
     }
-
-    private int FindFIreball()
+    private int FindFireball()
     {
         for (int i = 0; i < fireballs.Length; i++)
         {

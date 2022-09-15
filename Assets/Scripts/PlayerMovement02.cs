@@ -73,7 +73,7 @@ public class PlayerMovement02 : MonoBehaviour
 
     private void Jump()
     {
-        theRB.velocity = 
+        //theRB.velocity = 
     }
 
     private bool Grounded()
