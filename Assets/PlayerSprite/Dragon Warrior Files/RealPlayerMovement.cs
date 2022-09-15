@@ -10,6 +10,7 @@ public class RealPlayerMovement : MonoBehaviour
 
     [Header("Layer Masks")]
     [SerializeField] private LayerMask isGrounded;
+    [SerializeField] private LayerMask wallLayer;
     
 
     [Header("Movement Variables")]
@@ -42,6 +43,11 @@ public class RealPlayerMovement : MonoBehaviour
     [SerializeField] private Vector3 groundedRaycastOffset;
     private bool onGround;
 
+    [Header("Wall Collisions Variables")]
+    [SerializeField] private float wallRaycastLength;
+    public bool onWall;
+    public bool onRightWall;
+
     [Header("Corner Correction Variables")]
     [SerializeField] private float topRaycastLength;
     [SerializeField] private Vector3 edgeRaycastOffset;
@@ -66,7 +72,7 @@ public class RealPlayerMovement : MonoBehaviour
             jumpBufferReknare -= Time.deltaTime;
         }
 
-       if (canJump) Jump();
+       
 
         anim.SetBool("grounded", onGround);
         anim.SetFloat("HorizontalDirection", Mathf.Abs(horizontalMovement));
@@ -105,8 +111,9 @@ public class RealPlayerMovement : MonoBehaviour
         {
             ApplyAirDeceleration();
             FallMultiplier();
-            hangTimeReknare -= Time.deltaTime;
+            hangTimeReknare -= Time.fixedDeltaTime;
         }
+        if (canJump) Jump();
         if (canCornerCorrect) CornerCorrect(theRB.velocity.y);
     }
 
@@ -149,6 +156,7 @@ public class RealPlayerMovement : MonoBehaviour
             bonusJumpsValue--;
         }
 
+        ApplyAirDeceleration();
         theRB.velocity = new Vector2(theRB.velocity.x, 0f);
         theRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         hangTimeReknare = 0f;
@@ -213,6 +221,11 @@ public class RealPlayerMovement : MonoBehaviour
             !Physics2D.Raycast(transform.position + innerRaycastOffset, Vector2.up, topRaycastLength, isGrounded) ||
             Physics2D.Raycast(transform.position - edgeRaycastOffset, Vector2.up, topRaycastLength, isGrounded) &&
             !Physics2D.Raycast(transform.position - innerRaycastOffset, Vector2.up, topRaycastLength, isGrounded);
+
+        //Kollisioner med väggar
+        onWall = Physics2D.Raycast(transform.position, Vector2.right, wallRaycastLength, wallLayer) ||
+            Physics2D.Raycast(transform.position, Vector2.left, wallRaycastLength, wallLayer);
+        onRightWall = Physics2D.Raycast(transform.position, Vector2.right, wallRaycastLength, wallLayer);
     }
 
     private void OnDrawGizmos()
@@ -234,6 +247,10 @@ public class RealPlayerMovement : MonoBehaviour
             transform.position - innerRaycastOffset + Vector3.up * topRaycastLength + Vector3.left * topRaycastLength);
         Gizmos.DrawLine(transform.position + innerRaycastOffset + Vector3.up * topRaycastLength,
             transform.position + innerRaycastOffset + Vector3.up * topRaycastLength + Vector3.right * topRaycastLength);
+
+        //Koll av väggar
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.right * wallRaycastLength);
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.left * wallRaycastLength);
     }
 
     public bool canAttack()
