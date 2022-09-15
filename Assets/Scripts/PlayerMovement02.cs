@@ -55,26 +55,12 @@ public class PlayerMovement02 : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-                
-        
-        //visa fotsteg
-        if(Input.GetAxisRaw("Horizontal") != 0 && Grounded())
-        {
-            footEmission.rateOverTime = 35f;
-        }
-        else
-        {
-            footEmission.rateOverTime = 0f;
-        }
 
-        //visa impact effekt
-        if (!wasOnGround && Grounded())
+        if (Input.GetKey(KeyCode.Space))
         {
-            impactEffect.gameObject.SetActive(true);
-            impactEffect.Stop();
-            impactEffect.transform.position = footSetps.transform.position;
-            impactEffect.Play();
+            Jump();
         }
+        
 
         wasOnGround = Grounded();
 
@@ -83,6 +69,11 @@ public class PlayerMovement02 : MonoBehaviour
         anim.SetBool("run", horizontalInput != 0); 
         
 
+    }
+
+    private void Jump()
+    {
+        theRB.velocity = 
     }
 
     private bool Grounded()

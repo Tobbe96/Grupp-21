@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioClip audioClip;
 
     bool isFacingLeft = false;
-
+    
     private Vector3 velocity;
     public float smoothTime = 0.2f;
     private BoxCollider2D boxCollider;
@@ -49,18 +49,18 @@ public class PlayerMovement : MonoBehaviour
             audioSource.PlayOneShot(audioClip);
         }
 
-        animator.SetBool("Idle", isGrounded);
+        //animator.SetBool("Idle", isGrounded);
         animator.SetFloat("Walk", Mathf.Abs(moveDirection));
     }
 
     //FixedUpdate 
     private void FixedUpdate()
     {
-        GroundCheck();
+        //GroundCheck();
         Vector3 calculatedMovement = Vector3.zero;
         float verticalVelocity = 0f;
 
-        if (isGrounded == false)
+        //if (isGrounded == false)
         {
             verticalVelocity = rigidBody2D.velocity.y;
         }
@@ -70,11 +70,11 @@ public class PlayerMovement : MonoBehaviour
         isJumpPressed = false;
     }
 
-    private bool isGrounded()
-    {
-        RaycastHit2D raycasrHit = Physics2D.BoxCast(boxo);
-        return false;
-    }
+    //private bool isGrounded()
+    //{
+    //    RaycastHit2D raycasrHit = Physics2D.BoxCast(boxo);
+     //   return false;
+   // }
     private void Move(Vector3 moveDirection, bool isJumpPressed)
     {
         rigidBody2D.velocity = Vector3.SmoothDamp(rigidBody2D.velocity, moveDirection, ref velocity, smoothTime);
