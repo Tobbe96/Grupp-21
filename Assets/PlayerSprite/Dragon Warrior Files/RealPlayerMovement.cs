@@ -20,6 +20,7 @@ public class RealPlayerMovement : MonoBehaviour
     private float horizontalMovement;
     private bool switchDirection => (theRB.velocity.x > 0f && horizontalMovement < 0f) || (theRB.velocity.x < 0f && horizontalMovement > 0f);
     public bool isFacingRight = true;
+    private bool canMove => !wallGrab;
 
     [Header("Jump Variables")]
     [SerializeField] private float jumpForce = 12f;
@@ -35,8 +36,14 @@ public class RealPlayerMovement : MonoBehaviour
     private float hangTimeReknare;
     private float jumpBufferReknare;
     //private float jumpTimer;
-
     private bool canJump => jumpBufferReknare > 0f && (hangTimeReknare > 0f || bonusJumpsValue > 0 );
+
+    
+
+    [Header("Wall Player Movement Variables")]
+    [SerializeField] private float wallSlideModifier = 0.5f;
+    private bool wallGrab => onWall && !onGround && Input.GetButton("WallGrab");
+    private bool wallSlide => onWall && !onGround && !Input.GetButton("WallGrab") && theRB.velocity.y < 0f;
 
     [Header("Collision Variables Ground")]
     [SerializeField] private float groundedRaycastLength;
@@ -45,8 +52,8 @@ public class RealPlayerMovement : MonoBehaviour
 
     [Header("Wall Collisions Variables")]
     [SerializeField] private float wallRaycastLength;
-    public bool onWall;
-    public bool onRightWall;
+    private bool onWall;
+    private bool onRightWall;
 
     [Header("Corner Correction Variables")]
     [SerializeField] private float topRaycastLength;
@@ -95,7 +102,7 @@ public class RealPlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         CheckCollision();
-        MovePlayer();
+        if (canMove) MovePlayer();
         
         if (onGround)
         {
@@ -115,6 +122,8 @@ public class RealPlayerMovement : MonoBehaviour
         }
         if (canJump) Jump();
         if (canCornerCorrect) CornerCorrect(theRB.velocity.y);
+        if (wallGrab) WallGrab();
+        if (wallSlide) WallSlide();
     }
 
     private Vector2 GetInput()
@@ -183,10 +192,49 @@ public class RealPlayerMovement : MonoBehaviour
         }
     }
 
+    void WallGrab()
+    {
+        theRB.gravityScale = 0f;
+        theRB.velocity = new Vector2(theRB.velocity.x, 0f);
+        StickToWall();
+    }
+
+    void WallSlide()
+    {
+        theRB.velocity = new Vector2(theRB.velocity.x, -maxMoveSpeed * wallSlideModifier);
+        StickToWall();
+    }
+
+    void StickToWall()
+    {
+        //putta spelaren mot väggar
+        if (onRightWall && horizontalMovement >= 0f)
+        {
+            theRB.velocity = new Vector2(1f, theRB.velocity.y);
+        }
+        else if (!onRightWall && horizontalMovement <= 0f)
+        {
+            theRB.velocity = new Vector2(-1f, theRB.velocity.y);
+        }
+
+        //Kolla åt rätt håll på väggen
+        if (onRightWall && isFacingRight)
+        {
+            Flip();
+        }
+        else if(!onRightWall && !isFacingRight)
+        {
+            Flip();
+        }
+
+
+    }
+
     void Flip()
     {
         isFacingRight = !isFacingRight;
         transform.Rotate(0f, 180f, 0f);
+        
     }
 
     void CornerCorrect(float yVelocity)

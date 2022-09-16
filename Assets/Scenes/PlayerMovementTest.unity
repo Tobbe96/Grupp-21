@@ -3121,6 +3121,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2299189429643304369, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20daa800a641d9e4cae18a06630db1ef, type: 3}
+    - target: {fileID: 2299189429643304369, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176012, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Size.y
+      value: 1.8844817
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176012, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176012, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.77498114
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: onWall
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: onRightWall
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: topRaycastLength
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: wallRaycastLength
+      value: 1.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: edgeRaycastOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: innerRaycastOffset.x
+      value: 0.19
+      objectReference: {fileID: 0}
     - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
       propertyPath: fireballs.Array.data[0]
       value: 
@@ -3171,7 +3215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7761041644252486762, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.036
       objectReference: {fileID: 0}
     - target: {fileID: 7761041644252486762, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
       propertyPath: m_LocalPosition.z
