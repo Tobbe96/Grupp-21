@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 
 public class RealPlayerMovement : MonoBehaviour
@@ -36,12 +37,12 @@ public class RealPlayerMovement : MonoBehaviour
     private float hangTimeReknare;
     private float jumpBufferReknare;
     //private float jumpTimer;
-    private bool canJump => jumpBufferReknare > 0f && (hangTimeReknare > 0f || bonusJumpsValue > 0 );
-
+    private bool canJump => jumpBufferReknare > 0f && (hangTimeReknare > 0f || bonusJumpsValue > 0 || onWall);
+    private bool isJumping = false;
     
 
     [Header("Wall Player Movement Variables")]
-    [SerializeField] private float wallSlideModifier = 0.5f;
+    [SerializeField] private float wallSlideModifier = 1f;
     private bool wallGrab => onWall && !onGround && Input.GetButton("WallGrab");
     private bool wallSlide => onWall && !onGround && !Input.GetButton("WallGrab") && theRB.velocity.y < 0f;
 
@@ -103,7 +104,7 @@ public class RealPlayerMovement : MonoBehaviour
     {
         CheckCollision();
         if (canMove) MovePlayer();
-        
+        else theRB.velocity = Vector2.Lerp(theRB.velocity, (new Vector2(horizontalMovement * maxMoveSpeed, theRB.velocity.y)), 0.5f * Time.deltaTime);
         if (onGround)
         {
             ApplyGroundDeceleration();
@@ -119,11 +120,30 @@ public class RealPlayerMovement : MonoBehaviour
             ApplyAirDeceleration();
             FallMultiplier();
             hangTimeReknare -= Time.fixedDeltaTime;
+            if (!onWall || theRB.velocity.y < 0f) isJumping = false;
         }
-        if (canJump) Jump();
+        if (canJump)
+        {
+            if (onWall && !onGround)
+            {
+                WallJump();
+                Flip();
+            }
+            else
+            {
+                Jump(Vector2.up);
+            }
+        }
+        
+        //Jump();
         if (canCornerCorrect) CornerCorrect(theRB.velocity.y);
-        if (wallGrab) WallGrab();
-        if (wallSlide) WallSlide();
+        if (!isJumping)
+        {
+            if (wallSlide) WallSlide();
+            if (wallGrab) WallGrab();
+            if (onWall) StickToWall();
+        }
+       
     }
 
     private Vector2 GetInput()
@@ -158,22 +178,29 @@ public class RealPlayerMovement : MonoBehaviour
         theRB.drag = airDeceleration;
     }
 
-    private void Jump()
+    private void Jump(Vector2 direction)
     {
-        if (!onGround)
+        if (!onGround && !onWall)
         {
             bonusJumpsValue--;
         }
 
         ApplyAirDeceleration();
         theRB.velocity = new Vector2(theRB.velocity.x, 0f);
-        theRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        theRB.AddForce(direction * jumpForce, ForceMode2D.Impulse);
         hangTimeReknare = 0f;
         jumpBufferReknare = 0f;
+        isJumping = true;
 
         //Animation
-        anim.SetBool("isJumping", true);
-        anim.SetBool("isFalling", false);
+        //anim.SetBool("isJumping", true);
+        //anim.SetBool("isFalling", false);
+    }
+
+    private void WallJump()
+    {
+        Vector2 jumpDirection = onRightWall ? Vector2.left : Vector2.right;
+        Jump(Vector2.up + jumpDirection);
     }
 
     private void FallMultiplier()
@@ -195,14 +222,12 @@ public class RealPlayerMovement : MonoBehaviour
     void WallGrab()
     {
         theRB.gravityScale = 0f;
-        theRB.velocity = new Vector2(theRB.velocity.x, 0f);
-        StickToWall();
+        theRB.velocity = Vector2.zero;
     }
 
     void WallSlide()
     {
         theRB.velocity = new Vector2(theRB.velocity.x, -maxMoveSpeed * wallSlideModifier);
-        StickToWall();
     }
 
     void StickToWall()
@@ -235,6 +260,43 @@ public class RealPlayerMovement : MonoBehaviour
         isFacingRight = !isFacingRight;
         transform.Rotate(0f, 180f, 0f);
         
+    }
+
+    void Animation()
+    {
+        if ((horizontalMovement < 0f && isFacingRight || horizontalMovement > 0f && !isFacingRight) && !wallGrab && !wallSlide)
+        {
+            Flip();
+        }
+        if (onGround)
+        {
+            anim.SetBool("grounded", true);
+            anim.SetBool("isFalling", false);
+            anim.SetBool("WallGrab", false);
+            anim.SetFloat("HorizontalDirection", Mathf.Abs(horizontalMovement));
+        }
+        else
+        {
+            anim.SetBool("grounded", false);
+        }
+        if (isJumping)
+        {
+            anim.SetBool("isJumping", true);
+            anim.SetBool("isFalling", false);
+            anim.SetBool("WallGrab", false);
+            anim.SetFloat("verticalDirection", 0f);
+        }
+        else
+        {
+            anim.SetBool("isJumping", true);
+
+            if (wallGrab || wallSlide)
+            {
+                anim.SetBool("WallGrab", true);
+                anim.SetBool("isFalling", false);
+                anim.SetFloat("verticalDirection", 0f);  //fortsätt här imorn
+            }
+        }
     }
 
     void CornerCorrect(float yVelocity)

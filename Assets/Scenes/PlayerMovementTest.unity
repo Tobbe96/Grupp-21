@@ -3158,6 +3158,10 @@ PrefabInstance:
       value: 1.02
       objectReference: {fileID: 0}
     - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: wallSlideModifier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
       propertyPath: edgeRaycastOffset.y
       value: 0
       objectReference: {fileID: 0}
