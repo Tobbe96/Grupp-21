@@ -7,9 +7,9 @@ public class DeathPlane : MonoBehaviour
         {
             Destroy(collision.gameObject.transform.parent.gameObject);
         }
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") == true)
         {
-            collision.gameObject.GetComponent<PlayerState>().DoHarm(collision.gameObject.GetComponent<PlayerState>().healthPoints);
+            collision.gameObject.GetComponent<PlayerState>().Respawn();
         }
 }
 }
