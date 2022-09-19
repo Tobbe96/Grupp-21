@@ -12,6 +12,7 @@ public class RealPlayerMovement : MonoBehaviour
     [Header("Layer Masks")]
     [SerializeField] private LayerMask isGrounded;
     [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private LayerMask cornerCorrectionLayer;
     
 
     [Header("Movement Variables")]
@@ -19,6 +20,7 @@ public class RealPlayerMovement : MonoBehaviour
     [SerializeField] private float maxMoveSpeed = 12f;
     [SerializeField] private float groundDeceleration = 10f;
     private float horizontalMovement;
+    private float vericalDirection; 
     private bool switchDirection => (theRB.velocity.x > 0f && horizontalMovement < 0f) || (theRB.velocity.x < 0f && horizontalMovement > 0f);
     public bool isFacingRight = true;
     private bool canMove => !wallGrab;
@@ -46,6 +48,14 @@ public class RealPlayerMovement : MonoBehaviour
     private bool wallGrab => onWall && !onGround && Input.GetButton("WallGrab");
     private bool wallSlide => onWall && !onGround && !Input.GetButton("WallGrab") && theRB.velocity.y < 0f;
 
+    [Header("Dash Variables")]
+    [SerializeField] private float dashLength = 0.4f;
+    [SerializeField] private float dashBufferLength = 0.1f;
+    private float dashBufferReknare;
+    private bool isDashing;
+    private bool hasDashed;
+    private bool canDash => dashBufferReknare > 0f && !hasDashed;
+
     [Header("Collision Variables Ground")]
     [SerializeField] private float groundedRaycastLength;
     [SerializeField] private Vector3 groundedRaycastOffset;
@@ -71,79 +81,62 @@ public class RealPlayerMovement : MonoBehaviour
     private void Update()
     {
        horizontalMovement = GetInput().x;
-        if (Input.GetButtonDown("Jump"))
-        {
-            jumpBufferReknare = jumpBufferLength;
-        }
-        else
-        {
-            jumpBufferReknare -= Time.deltaTime;
-        }
-
-       
-
-        anim.SetBool("grounded", onGround);
-        anim.SetFloat("HorizontalDirection", Mathf.Abs(horizontalMovement));
-        if (horizontalMovement < 0f && isFacingRight)
-        {
-            Flip();
-        }
-        else if (horizontalMovement > 0f && !isFacingRight)
-        {
-            Flip();
-        }
-        if (theRB.velocity.y < 0f)
-        {
-            //Animation
-            anim.SetBool("isJumping", false);
-            anim.SetBool("isFalling", true);
-        }
+        if (Input.GetButtonDown("Jump")) jumpBufferReknare = jumpBufferLength;
+        else jumpBufferReknare -= Time.deltaTime;
+        if (Input.GetButtonDown("Dash")) dashBufferReknare = dashBufferLength;
+        else dashBufferReknare -= Time.deltaTime;
+        Animation();
+      
     }
 
     private void FixedUpdate()
     {
         CheckCollision();
-        if (canMove) MovePlayer();
-        else theRB.velocity = Vector2.Lerp(theRB.velocity, (new Vector2(horizontalMovement * maxMoveSpeed, theRB.velocity.y)), 0.5f * Time.deltaTime);
-        if (onGround)
+        if (canDash) StartCoroutine(Dash(horizontalMovement, vericalDirection));
+        if (!isDashing)
         {
-            ApplyGroundDeceleration();
-            bonusJumpsValue = bonusJumps;
-            hangTimeReknare = hangTime;
-
-            //Animation
-            anim.SetBool("isJumping", false);
-            anim.SetBool("isFalling", false);
-        }
-        else
-        {
-            ApplyAirDeceleration();
-            FallMultiplier();
-            hangTimeReknare -= Time.fixedDeltaTime;
-            if (!onWall || theRB.velocity.y < 0f) isJumping = false;
-        }
-        if (canJump)
-        {
-            if (onWall && !onGround)
+            if (canMove) MovePlayer();
+            else theRB.velocity = Vector2.Lerp(theRB.velocity, (new Vector2(horizontalMovement * maxMoveSpeed, theRB.velocity.y)), 0.5f * Time.deltaTime);
+            if (onGround)
             {
-                WallJump();
-                Flip();
+                ApplyGroundDeceleration();
+                bonusJumpsValue = bonusJumps;
+                hangTimeReknare = hangTime;
+                hasDashed = false;
+
             }
             else
             {
-                Jump(Vector2.up);
+                ApplyAirDeceleration();
+                FallMultiplier();
+                hangTimeReknare -= Time.fixedDeltaTime;
+                if (!onWall || theRB.velocity.y < 0f) isJumping = false;
+            }
+            if (canJump)
+            {
+                if (onWall && !onGround)
+                {
+                    WallJump();
+                    Flip();
+                }
+                else
+                {
+                    Jump(Vector2.up);
+                }
+            }
+
+            //Jump();
+
+            if (!isJumping)
+            {
+                if (wallSlide) WallSlide();
+                if (wallGrab) WallGrab();
+                if (onWall) StickToWall();
             }
         }
+
         
-        //Jump();
         if (canCornerCorrect) CornerCorrect(theRB.velocity.y);
-        if (!isJumping)
-        {
-            if (wallSlide) WallSlide();
-            if (wallGrab) WallGrab();
-            if (onWall) StickToWall();
-        }
-       
     }
 
     private Vector2 GetInput()
@@ -262,6 +255,34 @@ public class RealPlayerMovement : MonoBehaviour
         
     }
 
+    IEnumerator Dash(float x, float y)
+    {
+        float dashStartTime = Time.time;
+        hasDashed = true;
+        isDashing = true;
+        isJumping = false;
+
+        theRB.velocity = Vector2.zero;
+        theRB.gravityScale = 0f;
+        theRB.drag = 0f;
+
+        Vector2 dir;
+        if (x != 0f || y != 0f) dir = new Vector2(x, y);
+        else
+        {
+            if (isFacingRight) dir = new Vector2(1f, 0f);
+            else dir = new Vector2(-fallMultiplier, 0f);
+        }
+
+        while (Time.time < dashStartTime + dashLength)
+        {
+            theRB.velocity = dir.normalized * dashSpeed;
+            yield return null;
+        }
+
+        isDashing = false; //slutade här
+    }
+
     void Animation()
     {
         if ((horizontalMovement < 0f && isFacingRight || horizontalMovement > 0f && !isFacingRight) && !wallGrab && !wallSlide)
@@ -309,7 +330,7 @@ public class RealPlayerMovement : MonoBehaviour
     void CornerCorrect(float yVelocity)
     {
         //Putta spelaren till höger om hörnet
-        RaycastHit2D hit = Physics2D.Raycast(transform.position - innerRaycastOffset + Vector3.up * topRaycastLength, Vector3.left, topRaycastLength, isGrounded);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - innerRaycastOffset + Vector3.up * topRaycastLength, Vector3.left, topRaycastLength, cornerCorrectionLayer);
         if(hit.collider != null)
         {
             float newPosition = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0) + Vector3.up * topRaycastLength, transform.position - edgeRaycastOffset + Vector3.up * topRaycastLength);
@@ -319,7 +340,7 @@ public class RealPlayerMovement : MonoBehaviour
         }
 
         //Putta spelaren till vänster om hörnet
-        hit = Physics2D.Raycast(transform.position + innerRaycastOffset + Vector3.up * topRaycastLength, Vector3.right, topRaycastLength, isGrounded);
+        hit = Physics2D.Raycast(transform.position + innerRaycastOffset + Vector3.up * topRaycastLength, Vector3.right, topRaycastLength, cornerCorrectionLayer);
         if (hit.collider != null)
         {
             float newPosition = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0f) + Vector3.up * topRaycastLength, transform.position + edgeRaycastOffset + Vector3.up * topRaycastLength);
@@ -336,10 +357,10 @@ public class RealPlayerMovement : MonoBehaviour
         onGround = Physics2D.Raycast(transform.position + groundedRaycastOffset, Vector2.down, groundedRaycastLength, isGrounded) || Physics2D.Raycast(transform.position - groundedRaycastOffset, Vector2.down, groundedRaycastLength, isGrounded);
 
         //Kollisioner med hörn och kanter
-        canCornerCorrect = Physics2D.Raycast(transform.position + edgeRaycastOffset, Vector2.up, topRaycastLength, isGrounded) &&
-            !Physics2D.Raycast(transform.position + innerRaycastOffset, Vector2.up, topRaycastLength, isGrounded) ||
-            Physics2D.Raycast(transform.position - edgeRaycastOffset, Vector2.up, topRaycastLength, isGrounded) &&
-            !Physics2D.Raycast(transform.position - innerRaycastOffset, Vector2.up, topRaycastLength, isGrounded);
+        canCornerCorrect = Physics2D.Raycast(transform.position + edgeRaycastOffset, Vector2.up, topRaycastLength, cornerCorrectionLayer) &&
+            !Physics2D.Raycast(transform.position + innerRaycastOffset, Vector2.up, topRaycastLength, cornerCorrectionLayer) ||
+            Physics2D.Raycast(transform.position - edgeRaycastOffset, Vector2.up, topRaycastLength, cornerCorrectionLayer) &&
+            !Physics2D.Raycast(transform.position - innerRaycastOffset, Vector2.up, topRaycastLength, cornerCorrectionLayer);
 
         //Kollisioner med väggar
         onWall = Physics2D.Raycast(transform.position, Vector2.right, wallRaycastLength, wallLayer) ||
