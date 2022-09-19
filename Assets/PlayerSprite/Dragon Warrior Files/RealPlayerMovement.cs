@@ -294,8 +294,15 @@ public class RealPlayerMovement : MonoBehaviour
             {
                 anim.SetBool("WallGrab", true);
                 anim.SetBool("isFalling", false);
-                anim.SetFloat("verticalDirection", 0f);  //fortsätt här imorn
+                anim.SetFloat("verticalDirection", 0f);  
             }
+            else if (theRB.velocity.y < 0f)
+            {
+                anim.SetBool("isFalling", true);
+                anim.SetBool("WallGrab", false);
+                anim.SetFloat("verticalDirection", 0f);  //Fortsätt här typ 
+            }
+            
         }
     }
 
@@ -323,6 +330,8 @@ public class RealPlayerMovement : MonoBehaviour
 
     private void CheckCollision()
     {
+        
+
         //Mark kollisioner
         onGround = Physics2D.Raycast(transform.position + groundedRaycastOffset, Vector2.down, groundedRaycastLength, isGrounded) || Physics2D.Raycast(transform.position - groundedRaycastOffset, Vector2.down, groundedRaycastLength, isGrounded);
 
