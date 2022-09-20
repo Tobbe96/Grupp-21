@@ -7,6 +7,7 @@ TagManager:
   - WingMan
   - CheckPoint
   - GameMusic
+  - Enemy01
   layers:
   - Default
   - TransparentFX
