@@ -7,6 +7,7 @@ TagManager:
   - WingMan
   - CheckPoint
   - GameMusic
+  - Lights
   layers:
   - Default
   - TransparentFX
@@ -44,9 +45,39 @@ TagManager:
   - name: Particals
     uniqueID: 4265057827
     locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: BackgroundSprite
+    uniqueID: 2987125565
+    locked: 0
+  - name: FarBackground
+    uniqueID: 2302923423
+    locked: 0
+  - name: Background
+    uniqueID: 4118885705
+    locked: 0
+  - name: Ground
+    uniqueID: 2048043457
+    locked: 0
   - name: Player
     uniqueID: 931482163
     locked: 0
-  - name: Default
-    uniqueID: 0
+  - name: VegetationBackFront
+    uniqueID: 2361570807
+    locked: 0
+  - name: StonesFront
+    uniqueID: 3602521405
+    locked: 0
+  - name: VegetationFront
+    uniqueID: 1740598067
+    locked: 0
+  - name: FrontFront
+    uniqueID: 1437666851
+    locked: 0
+  - name: New Layer 11
+    uniqueID: 3428574409
+    locked: 0
+  - name: 
+    uniqueID: 4082801335
     locked: 0
