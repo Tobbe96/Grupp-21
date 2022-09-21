@@ -73,7 +73,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c7f9515f98716a04f9947a668e95753f, type: 2}
+  m_Motion: {fileID: 7400000, guid: f970f6a3c1eb5184abe4543ad095c51b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -85,7 +85,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hermit_Animation_Controller
+  m_Name: Slug_Animation_Controller
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: IsAttacking
@@ -197,7 +197,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 43ad04c31415f5c499b3c778a7f5436e, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3985496c01aa59042a9bfbfa49ce0582, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -211,7 +211,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Attack
-  m_Speed: 0.5
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1691182401185817329}
@@ -225,7 +225,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: dd58f69b467e2314ea59a2d17a148993, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3985496c01aa59042a9bfbfa49ce0582, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

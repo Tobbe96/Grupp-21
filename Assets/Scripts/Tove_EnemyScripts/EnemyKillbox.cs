@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class EnemyKillbox : MonoBehaviour
 {
-    GameObject gameObjectToKill;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip audioClip;
 
@@ -13,18 +12,16 @@ public class EnemyKillbox : MonoBehaviour
     private void Start()
     {
 
-        gameObjectToKill = gameObject.transform.parent.gameObject;
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnCollisionEnter2D(Collision2D col)
     {
-
-        col.CompareTag("Player");
-        
-            if (col.gameObject.GetComponent<PlayerMovement>().IsFalling() == true)
+        if (col.gameObject.CompareTag("Player") && col.gameObject.GetComponent<PlayerMovement>().IsFalling())
             {
-                gameObject.GetComponentInParent<EnemyControl>().TakeDamage(1);
+                
+                gameObject.GetComponentInParent<Enemy_State>().TakeDamage(1);
                 audioSource.PlayOneShot(audioClip);
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10f);
             }
     }
 }

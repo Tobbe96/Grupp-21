@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         isFacingLeft = !isFacingLeft;
     }
     public bool IsFalling() {
-        if (rigidBody2D.velocity.y < -1f)
+        if (rigidBody2D.velocity.y < 0f)
         {
             return true;
         }
