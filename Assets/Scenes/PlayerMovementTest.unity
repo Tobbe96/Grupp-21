@@ -3259,6 +3259,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioClipDash
+      value: 
+      objectReference: {fileID: 8300000, guid: 99a420901c8f44a7090e4e299e91a3af, type: 3}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioClipJump
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d2aebb704a3f644bb1f38f8efa67f84, type: 3}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
       propertyPath: topRaycastLength
       value: 0.54
       objectReference: {fileID: 0}
@@ -3282,6 +3290,14 @@ PrefabInstance:
       propertyPath: cornerCorrectionLayer.m_Bits
       value: 72
       objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1377971936}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioClipShoot
+      value: 
+      objectReference: {fileID: 8300000, guid: fb0ee21d489a14d21b86ba4c851247ba, type: 3}
     - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
       propertyPath: fireballs.Array.data[0]
       value: 

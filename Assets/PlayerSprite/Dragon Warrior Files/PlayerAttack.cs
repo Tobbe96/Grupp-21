@@ -7,6 +7,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attackCooldown;
     [SerializeField] private Transform FirePoint;
     [SerializeField] private GameObject[] fireballs;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip audioClipShoot;
 
     private Animator anim;
     private RealPlayerMovement playerMovement;
@@ -29,6 +31,7 @@ public class PlayerAttack : MonoBehaviour
     private void Attack()
     {
         anim.SetTrigger("attack");
+        audioSource.PlayOneShot(audioClipShoot);
         cooldownTimer = 0;
 
         fireballs[FindFireball()].transform.position = FirePoint.position;
