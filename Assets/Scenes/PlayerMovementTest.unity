@@ -868,6 +868,110 @@ Transform:
   m_Father: {fileID: 1005051705}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
+=======
+--- !u!1 &1377971928 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8625400194095387730, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+  m_PrefabInstance: {fileID: 7586860995260176009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1377971936
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377971928}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+>>>>>>> parent of a4a2c19 (ljud skit)
 --- !u!1 &1428440923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,7 +1559,127 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 6049585085844881608, guid: 4bd266b3c04c0484daeaf79128a3b07e, type: 3}
+=======
+    - target: {fileID: 2299189429643304369, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20daa800a641d9e4cae18a06630db1ef, type: 3}
+    - target: {fileID: 2299189429643304369, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176012, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Size.y
+      value: 1.8844817
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176012, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176012, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.77498114
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: onWall
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d2aebb704a3f644bb1f38f8efa67f84, type: 3}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1377971936}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: onRightWall
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioClipDash
+      value: 
+      objectReference: {fileID: 8300000, guid: 99a420901c8f44a7090e4e299e91a3af, type: 3}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioClipJump
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d2aebb704a3f644bb1f38f8efa67f84, type: 3}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: topRaycastLength
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: wallRaycastLength
+      value: 1.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: wallSlideModifier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: edgeRaycastOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: innerRaycastOffset.x
+      value: 0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176017, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: cornerCorrectionLayer.m_Bits
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1377971936}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: audioClipShoot
+      value: 
+      objectReference: {fileID: 8300000, guid: fb0ee21d489a14d21b86ba4c851247ba, type: 3}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[0]
+      value: 
+      objectReference: {fileID: 657744807}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1682000726}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[2]
+      value: 
+      objectReference: {fileID: 244985206}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[3]
+      value: 
+      objectReference: {fileID: 136985569}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[4]
+      value: 
+      objectReference: {fileID: 2084744823}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[5]
+      value: 
+      objectReference: {fileID: 1774218805}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[6]
+      value: 
+      objectReference: {fileID: 2080352547}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[7]
+      value: 
+      objectReference: {fileID: 849925768}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[8]
+      value: 
+      objectReference: {fileID: 63101600}
+    - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: fireballs.Array.data[9]
+      value: 
+      objectReference: {fileID: 1040553244}
+    - target: {fileID: 7761041644252486762, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+>>>>>>> parent of a4a2c19 (ljud skit)
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
