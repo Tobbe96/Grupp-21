@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class Enemy_State : MonoBehaviour
 {
-    [Header("Health")] [SerializeField] private float health, maxHealth = 3f;
-public void start()
+    [Header("Health")] 
+    [SerializeField] private float health, maxHealth = 3f;
+public void Start()
 {
     health = maxHealth;
 

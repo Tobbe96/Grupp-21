@@ -11,19 +11,25 @@ public class EnemyKillbox : MonoBehaviour
 
     private void Start()
     {
-
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        //Change scripts!!
-        if (col.gameObject.CompareTag("Player") && col.gameObject.GetComponent<PlayerMovement>().IsFalling())
+        if (col.gameObject.CompareTag("Player") && col.gameObject.GetComponent<RealPlayerMovement>().IsFalling())
             {
-                
                 gameObject.GetComponentInParent<Enemy_State>().TakeDamage(1);
                 audioSource.PlayOneShot(audioClip);
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10f);
             }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Fireball"))
+        {
+            gameObject.GetComponentInParent<Enemy_State>().TakeDamage(1);
+            audioSource.PlayOneShot(audioClip);
+        }
     }
 }
 // private void onCollisionEnter2D(Collision2D collision)

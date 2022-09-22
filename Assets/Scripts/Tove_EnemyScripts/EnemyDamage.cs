@@ -15,7 +15,7 @@ public class EnemyDamage : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (collision.gameObject.GetComponent<PlayerMovement>().IsFalling())
+            if (collision.gameObject.GetComponent<RealPlayerMovement>().IsFalling())
             {
                 collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * _pushForce, ForceMode2D.Impulse);
                 return;
