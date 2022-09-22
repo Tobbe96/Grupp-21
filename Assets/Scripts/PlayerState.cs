@@ -32,7 +32,7 @@ public class PlayerState : MonoBehaviour
             Respawn();
         }
     }
-    private void Respawn()
+    public void Respawn()
     {
         healthPoints = initialHealthPoints;
         gameObject.transform.position = respawnPosition.transform.position;

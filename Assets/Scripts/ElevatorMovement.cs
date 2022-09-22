@@ -10,7 +10,7 @@ public class ElevatorMovement : MonoBehaviour
 
     [SerializeField] private List<GameObject> targetPoints;
     private int currentTargetPointIndex;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class ElevatorMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (nextTarget != null)
-        { 
+        {
             MoveToPosition(nextTarget);
         }
     }
@@ -41,12 +41,18 @@ public class ElevatorMovement : MonoBehaviour
     private void ChangeTarget()
     {
         currentTargetPointIndex++;
-        if (currentTargetPointIndex >= targetPoints.Count) currentTargetPointIndex = 0;
+        if (currentTargetPointIndex >= targetPoints.Count)
+        {
+            currentTargetPointIndex = 0;
+        }
+
         while (targetPoints[currentTargetPointIndex] == null)
         {
             currentTargetPointIndex++;
-            if (currentTargetPointIndex >= targetPoints.Count) currentTargetPointIndex = 0;
-
+            if (currentTargetPointIndex >= targetPoints.Count)
+            {
+                currentTargetPointIndex = 0;
+            }
         }
 
         nextTarget = targetPoints[currentTargetPointIndex];

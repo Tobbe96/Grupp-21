@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip audioClip;
 
+    [SerializeField] private LayerMask WhatIsGround;
+
     bool isFacingLeft = false;
 
     private Vector3 velocity;
@@ -72,10 +74,10 @@ public class PlayerMovement : MonoBehaviour
     private void GroundCheck()
     {
         isGrounded = false;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.transform.position, 0.2f);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.transform.position, 0.2f, WhatIsGround);
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].gameObject.layer == 3 && rigidBody2D.velocity.y <= 0)
+            if (colliders[i].gameObject != gameObject)
             {
                 isGrounded = true;
             }
