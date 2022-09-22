@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 public class PickUp_Coin : MonoBehaviour
 {
@@ -23,6 +25,9 @@ public class PickUp_Coin : MonoBehaviour
             if (timer > timeBeforeDeletion)
             {
                 Destroy(gameObject);
+
+                
+                
             }
         }
     }
