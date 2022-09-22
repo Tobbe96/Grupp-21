@@ -9670,6 +9670,7 @@ GameObject:
   - component: {fileID: 7586860995260176016}
   - component: {fileID: 7586860995260176017}
   - component: {fileID: 7586860995260176019}
+  - component: {fileID: 650640137}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -9686,7 +9687,7 @@ Transform:
   m_GameObject: {fileID: 8625400194095387730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 846584654}
@@ -9733,8 +9734,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2040221627
+  m_SortingLayer: 3
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 20daa800a641d9e4cae18a06630db1ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -9761,7 +9762,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.1
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 5364a1f825edd4bf48fb1d23a780a1d3, type: 2}
   m_Interpolate: 0
@@ -9781,7 +9782,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.09475765, y: -0.7794454}
+  m_Offset: {x: 0.09475765, y: -0.789049}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -9792,7 +9793,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.87077993, y: 1.8755531}
+  m_Size: {x: 0.87077993, y: 1.8947604}
   m_EdgeRadius: 0
 --- !u!95 &7586860995260176016
 Animator:
@@ -9826,32 +9827,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 675721a356e4548cd8ebfcc95a32fb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  audioClipJump: {fileID: 0}
+  audioClipDash: {fileID: 0}
   isGrounded:
     serializedVersion: 2
     m_Bits: 8
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  movementAcceleration: 75
-  maxMoveSpeed: 8
-  groundDeceleration: 10
+  cornerCorrectionLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  movementAcceleration: 30
+  maxMoveSpeed: 5
+  groundDeceleration: 20
   isFacingRight: 1
-  jumpForce: 15
-  airDeceleration: 2.5
+  jumpForce: 12
+  airDeceleration: 2
   fallMultiplier: 7
   lowJumpFallMultiplier: 5
+  downMultiplier: 5
   jumpDelay: 0.15
   bonusJumps: 1
   hangTime: 0.1
   jumpBufferLength: 0.1
-  groundedRaycastLength: 2
-  groundedRaycastOffset: {x: 0.4, y: 0, z: 0}
-  wallRaycastLength: 0.72
-  onWall: 0
-  onRightWall: 0
-  topRaycastLength: 0.4
-  edgeRaycastOffset: {x: 0.4, y: 0, z: 0}
-  innerRaycastOffset: {x: 0.1, y: 0, z: 0}
+  wallSlideModifier: 1
+  dashSpeed: 5
+  dashLength: 0.4
+  dashBufferLength: 0.1
+  groundedRaycastLength: 0.48
+  groundedRaycastOffset: {x: 0.08, y: 0, z: 0}
+  wallRaycastLength: 0.32
+  topRaycastLength: 0.09
+  edgeRaycastOffset: {x: 0.08, y: 0, z: 0}
+  innerRaycastOffset: {x: 0.04, y: 0, z: 0}
 --- !u!114 &7586860995260176019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9877,3 +9887,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  audioSource: {fileID: 0}
+  audioClipShoot: {fileID: 0}
+--- !u!114 &650640137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8625400194095387730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d490aa6bc3efb54a8bd87813f468a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoints: 2
+  initialHealthPoints: 2
+  coinAmount: 0
+  respawnPosition: {fileID: 0}
+  startPosition: {fileID: 0}
+  useStartPosition: 1
+  isQuestComplete: 1

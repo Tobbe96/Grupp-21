@@ -8,6 +8,7 @@ TagManager:
   - CheckPoint
   - GameMusic
   - Ground
+  - Lights
   layers:
   - Default
   - TransparentFX
@@ -42,6 +43,27 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackgroundSprite
+    uniqueID: 2413078803
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackBack
+    uniqueID: 2260627715
+    locked: 0
+  - name: Background
+    uniqueID: 584808935
+    locked: 0
+  - name: Ground
+    uniqueID: 2254745669
+    locked: 0
+  - name: Front/BehindStones
+    uniqueID: 2831458181
+    locked: 0
+  - name: Stones
+    uniqueID: 2624852027
+    locked: 0
+  - name: FrontFront
+    uniqueID: 49285961
     locked: 0
