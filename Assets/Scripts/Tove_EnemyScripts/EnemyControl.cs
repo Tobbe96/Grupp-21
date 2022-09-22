@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,11 +12,13 @@ public class EnemyControl : MonoBehaviour
     public GameObject player;
     private Animator animator;
     
+    
     [Header("Moving")]
     [SerializeField] private bool canMove;
     [SerializeField] private float moveSpeed = 2f;
     public float movementDirection = 1f;
     public GameObject groundCheckPoint;
+    [SerializeField] private GameObject groundCheck;
     
 
     [Header("Chasing")]
@@ -31,11 +34,10 @@ public class EnemyControl : MonoBehaviour
     [SerializeField] private int projectileAmount = 6;
     public float projectileRadius = 360f;
 
-    
-    [Header("Jumping")] 
-    [SerializeField] private bool canJump;
-    [SerializeField] private float jumpHeight = 1;
-    [SerializeField] private GameObject groundCheck;
+    //Jumping is currently under construction
+    // [Header("Jumping")] 
+    // [SerializeField] private bool canJump;
+    // [SerializeField] private float jumpHeight = 1;
     
     private void Awake()
     {
@@ -44,12 +46,7 @@ public class EnemyControl : MonoBehaviour
 
     void Start()
     {
-        animator = gameObject.GetComponent<Animator>();
-    }
-
-
-    private void Update()
-    {
+    animator = gameObject.GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -62,19 +59,18 @@ public class EnemyControl : MonoBehaviour
             return;
         }
 
-
+        if (canChase && IsPlayerInRange() && Mathf.Abs(player.transform.position.y - transform.position.y) < 3)
+        {
+            ChasePlayer();
+            return;
+        }
+        
         if (!IsGrounded())
         {
             ChangeDirection();
             return;
         }
-
-        if (canChase && IsPlayerInRange() && Mathf.Abs(player.transform.position.y - transform.position.y) < 2)
-        {
-            ChasePlayer();
-            return;
-        }
-
+        
         if (canShoot && IsPlayerInRange())
         {
             StartCoroutine(Shoot());
@@ -82,34 +78,30 @@ public class EnemyControl : MonoBehaviour
             return;
         }
             
-        if (canJump && IsGrounded())
-        {
-            Jump();
-
-        }
-        
         if (canMove)
         {
             Move();
         }
     }
+        //Jump is currently under construction
+        // if (canJump && IsGrounded())
+        // {
+        //     Jump();
+        // }
 
-    private void SetAnimator()
+
+        private void SetAnimator()
     {
         animator.SetBool("IsWalking", canMove);
         animator.SetBool("IsAttacking", !canShoot);
         animator.SetBool("IsAlive", isAlive);
 
-
     }
-
-    private void LateUpdate()
-    {
-    }
-
+  
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer != 3)
+            
         {
             ChangeDirection();
         }    
@@ -120,11 +112,7 @@ public class EnemyControl : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        Vector3 newPosition = gameObject.transform.position;
-        float moveVectorX = (moveSpeed * Time.fixedDeltaTime) * movementDirection;
-        newPosition.x += moveVectorX;
-        rigidBody2D.MovePosition(newPosition);
-
+        rigidBody2D.velocity = new Vector2(movementDirection * moveSpeed, rigidBody2D.velocity.y);
     }
     
     /// <summary>
@@ -144,12 +132,15 @@ public class EnemyControl : MonoBehaviour
         }
         return false;
     }
-    private void Jump()
-    {
-rigidBody2D.AddForce(new Vector2(2, jumpHeight), ForceMode2D.Impulse);        
-        //Do ajimppyjumppy dumppy
-        //do not turn if you are in the air!
-    }
+    
+    
+    //Jump is currently under construction!
+//     private void Jump()
+//     {
+// rigidBody2D.AddForce(new Vector2(1.5f, jumpHeight), ForceMode2D.Impulse);        
+//         Do ajimppyjumppy dumppy
+//         do not turn if you are in the air!
+//     }
 
 
     /// <summary>
@@ -157,7 +148,6 @@ rigidBody2D.AddForce(new Vector2(2, jumpHeight), ForceMode2D.Impulse);
     /// </summary>
     private void ChangeDirection()
     {
-        //do not change direction when airbourne
             movementDirection *= -1;
             Vector3 newScale = gameObject.transform.localScale;
             newScale.x = movementDirection;
@@ -173,7 +163,6 @@ rigidBody2D.AddForce(new Vector2(2, jumpHeight), ForceMode2D.Impulse);
         {
             return true;
         }
-
         return false;
     }
 
@@ -186,10 +175,9 @@ rigidBody2D.AddForce(new Vector2(2, jumpHeight), ForceMode2D.Impulse);
 /// Move towards player at chaseSpeed
 /// </summary>
     private void ChasePlayer()
-{
-        Vector3 newPosition = gameObject.transform.position;
+    {
         float moveDir = (player.transform.position.x - transform.position.x) >= 0 ? 1 : -1;
-
+        rigidBody2D.velocity = new Vector2(moveDir * moveSpeed * chaseSpeedMultiplier, rigidBody2D.velocity.y);
         // if ((player.transform.position.x - transform.position.x) >= 0)
         // {
         //     moveDir = 1;
@@ -198,10 +186,7 @@ rigidBody2D.AddForce(new Vector2(2, jumpHeight), ForceMode2D.Impulse);
         // {
         //     moveDir = -1;
         // }
-        newPosition.x += (moveSpeed * chaseSpeedMultiplier * Time.fixedDeltaTime) * moveDir;
-        rigidBody2D.MovePosition(newPosition);
         
-        //face player when chasing
         //om vi går åt höger och inte tittar åt höger
         if (moveDir > 0 && transform.localScale.x < 0)
         {
@@ -212,8 +197,23 @@ rigidBody2D.AddForce(new Vector2(2, jumpHeight), ForceMode2D.Impulse);
         {
             ChangeDirection();
         }
-        
     }
+public void StartPauseChasing(float seconds)
+{
+    if (!canChase)
+    {
+        return;
+    }
+    StartCoroutine(PauseChasing(seconds));
+}
+
+public IEnumerator PauseChasing(float seconds)
+{
+    canChase = false;
+    yield return new WaitForSeconds(seconds);
+    canChase = true;
+}
+
 
 //offset projectiles 6/180
 private bool isOffset = false;
@@ -224,8 +224,8 @@ IEnumerator Shoot()
 {
     StartCoroutine(ShootCooldown());
     animator.SetBool("IsAttacking", true);
+    
     //Enemy stops to shoot
-    //builddup 
     float animationLength = animator.GetCurrentAnimatorClipInfo(0).Length;
     yield return new WaitForSeconds(animationLength);
 
@@ -260,12 +260,9 @@ IEnumerator ShootCooldown()
     yield return new WaitForSeconds(shotCooldown);
     canMove = true;
     canShoot = true;
-
 }
 
-    
-
-    /// <summary>
+/// <summary>
 /// Death animation and destroy after 5s delay
 /// </summary>
     public void KillMe()
@@ -282,7 +279,6 @@ IEnumerator ShootCooldown()
 
 /*
  bool canshoot
- bool canjump
  bool canchase
  
  Groundcehck
