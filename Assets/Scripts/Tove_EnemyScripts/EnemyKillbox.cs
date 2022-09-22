@@ -16,6 +16,7 @@ public class EnemyKillbox : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
+        //Change scripts!!
         if (col.gameObject.CompareTag("Player") && col.gameObject.GetComponent<PlayerMovement>().IsFalling())
             {
                 
