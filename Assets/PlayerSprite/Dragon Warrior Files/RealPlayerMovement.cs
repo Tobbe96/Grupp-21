@@ -9,6 +9,12 @@ public class RealPlayerMovement : MonoBehaviour
     private Rigidbody2D theRB;
     private Animator anim;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip audioClipJump;
+    [SerializeField] private AudioClip audioClipDash;
+    
+
     [Header("Layer Masks")]
     [SerializeField] private LayerMask isGrounded;
     [SerializeField] private LayerMask wallLayer;
@@ -30,6 +36,7 @@ public class RealPlayerMovement : MonoBehaviour
     [SerializeField] private float airDeceleration = 2.5f;
     [SerializeField] private float fallMultiplier = 8f;
     [SerializeField] private float lowJumpFallMultiplier = 5f;
+    [SerializeField] private float downMultiplier = 5f;
     [SerializeField] private float jumpDelay = 0.15f;
     [SerializeField] private int bonusJumps = 1;
     [SerializeField] private float hangTime = 0.2f;
@@ -49,6 +56,7 @@ public class RealPlayerMovement : MonoBehaviour
     private bool wallSlide => onWall && !onGround && !Input.GetButton("WallGrab") && theRB.velocity.y < 0f;
 
     [Header("Dash Variables")]
+    [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashLength = 0.4f;
     [SerializeField] private float dashBufferLength = 0.1f;
     private float dashBufferReknare;
@@ -80,11 +88,13 @@ public class RealPlayerMovement : MonoBehaviour
 
     private void Update()
     {
-       horizontalMovement = GetInput().x;
+        horizontalMovement = GetInput().x;
+        vericalDirection = GetInput().y;
         if (Input.GetButtonDown("Jump")) jumpBufferReknare = jumpBufferLength;
         else jumpBufferReknare -= Time.deltaTime;
         if (Input.GetButtonDown("Dash")) dashBufferReknare = dashBufferLength;
         else dashBufferReknare -= Time.deltaTime;
+        
         Animation();
       
     }
@@ -96,6 +106,7 @@ public class RealPlayerMovement : MonoBehaviour
         if (!isDashing)
         {
             if (canMove) MovePlayer();
+            
             else theRB.velocity = Vector2.Lerp(theRB.velocity, (new Vector2(horizontalMovement * maxMoveSpeed, theRB.velocity.y)), 0.5f * Time.deltaTime);
             if (onGround)
             {
@@ -122,6 +133,7 @@ public class RealPlayerMovement : MonoBehaviour
                 else
                 {
                     Jump(Vector2.up);
+                    audioSource.PlayOneShot(audioClipJump);
                 }
             }
 
@@ -147,11 +159,12 @@ public class RealPlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         theRB.AddForce(new Vector2(horizontalMovement, 0f) * movementAcceleration);
-
-        if(Mathf.Abs(theRB.velocity.x) > maxMoveSpeed)
+        
+        if (Mathf.Abs(theRB.velocity.x) > maxMoveSpeed)
         {
             theRB.velocity = new Vector2(Mathf.Sign(theRB.velocity.x) * maxMoveSpeed, theRB.velocity.y);
         }
+        
     }
 
     private void ApplyGroundDeceleration()
@@ -178,6 +191,7 @@ public class RealPlayerMovement : MonoBehaviour
             bonusJumpsValue--;
         }
 
+        audioSource.PlayOneShot(audioClipJump);
         ApplyAirDeceleration();
         theRB.velocity = new Vector2(theRB.velocity.x, 0f);
         theRB.AddForce(direction * jumpForce, ForceMode2D.Impulse);
@@ -185,30 +199,36 @@ public class RealPlayerMovement : MonoBehaviour
         jumpBufferReknare = 0f;
         isJumping = true;
 
-        //Animation
-        //anim.SetBool("isJumping", true);
-        //anim.SetBool("isFalling", false);
+        
     }
 
     private void WallJump()
     {
         Vector2 jumpDirection = onRightWall ? Vector2.left : Vector2.right;
         Jump(Vector2.up + jumpDirection);
+        audioSource.PlayOneShot(audioClipJump);
     }
 
     private void FallMultiplier()
     {
-        if (theRB.velocity.y < 0)
+        if (vericalDirection < 0f)
         {
-            theRB.gravityScale = fallMultiplier;
-        }
-        else if(theRB.velocity.y > 0 && !Input.GetButton("Jump"))
-        {
-            theRB.gravityScale = lowJumpFallMultiplier;
+            theRB.gravityScale = downMultiplier;
         }
         else
         {
-            theRB.gravityScale = 1f;
+            if (theRB.velocity.y < 0)
+            {
+                theRB.gravityScale = fallMultiplier;
+            }
+            else if (theRB.velocity.y > 0 && !Input.GetButton("Jump"))
+            {
+                theRB.gravityScale = lowJumpFallMultiplier;
+            }
+            else
+            {
+                theRB.gravityScale = 1f;
+            }
         }
     }
 
@@ -246,6 +266,8 @@ public class RealPlayerMovement : MonoBehaviour
         }
 
 
+
+
     }
 
     void Flip()
@@ -265,7 +287,7 @@ public class RealPlayerMovement : MonoBehaviour
         theRB.velocity = Vector2.zero;
         theRB.gravityScale = 0f;
         theRB.drag = 0f;
-
+        audioSource.PlayOneShot(audioClipDash);
         Vector2 dir;
         if (x != 0f || y != 0f) dir = new Vector2(x, y);
         else
@@ -285,46 +307,60 @@ public class RealPlayerMovement : MonoBehaviour
 
     void Animation()
     {
-        if ((horizontalMovement < 0f && isFacingRight || horizontalMovement > 0f && !isFacingRight) && !wallGrab && !wallSlide)
+        if(isDashing)
         {
-            Flip();
-        }
-        if (onGround)
-        {
-            anim.SetBool("grounded", true);
-            anim.SetBool("isFalling", false);
-            anim.SetBool("WallGrab", false);
-            anim.SetFloat("HorizontalDirection", Mathf.Abs(horizontalMovement));
-        }
-        else
-        {
+            anim.SetBool("isDashing", true);
             anim.SetBool("grounded", false);
-        }
-        if (isJumping)
-        {
-            anim.SetBool("isJumping", true);
             anim.SetBool("isFalling", false);
             anim.SetBool("WallGrab", false);
+            anim.SetBool("isJumping", false);
+            anim.SetFloat("HorizontalDirection", 0f);
             anim.SetFloat("verticalDirection", 0f);
         }
         else
         {
-            anim.SetBool("isJumping", true);
-
-            if (wallGrab || wallSlide)
-            {
-                anim.SetBool("WallGrab", true);
-                anim.SetBool("isFalling", false);
-                anim.SetFloat("verticalDirection", 0f);  
-            }
-            else if (theRB.velocity.y < 0f)
-            {
-                anim.SetBool("isFalling", true);
-                anim.SetBool("WallGrab", false);
-                anim.SetFloat("verticalDirection", 0f);  //Fortsätt här typ 
-            }
-            
+            anim.SetBool("isDashing", false);
         }
+            if ((horizontalMovement < 0f && isFacingRight || horizontalMovement > 0f && !isFacingRight) && !wallGrab && !wallSlide)
+            {
+                Flip();
+            }
+            if (onGround)
+            {
+                anim.SetBool("grounded", true);
+                anim.SetBool("isFalling", false);
+                anim.SetBool("WallGrab", false);
+                anim.SetFloat("HorizontalDirection", Mathf.Abs(horizontalMovement));
+            }
+            else
+            {
+                anim.SetBool("grounded", false);
+            }
+            if (isJumping)
+            {
+                anim.SetBool("isJumping", true);
+                anim.SetBool("isFalling", false);
+                anim.SetBool("WallGrab", false);
+                anim.SetFloat("verticalDirection", 0f);
+            }
+            else
+            {
+                anim.SetBool("isJumping", false);
+
+                if (wallGrab || wallSlide)
+                {
+                    anim.SetBool("WallGrab", true);
+                    anim.SetBool("isFalling", false);
+                    anim.SetFloat("verticalDirection", 0f);  
+                }
+                else if (theRB.velocity.y < 0f)
+                {
+                    anim.SetBool("isFalling", true);
+                    anim.SetBool("WallGrab", false);
+                    anim.SetFloat("verticalDirection", 0f);  //Fortsätt här typ 
+                }
+            
+            }
     }
 
     void CornerCorrect(float yVelocity)
