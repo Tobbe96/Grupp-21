@@ -9,6 +9,8 @@ TagManager:
   - GameMusic
   - Ground
   - Lights
+  - Enemy01
+  - Fireball
   layers:
   - Default
   - TransparentFX

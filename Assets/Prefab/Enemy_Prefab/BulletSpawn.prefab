@@ -72,15 +72,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: e6aca6f12c5f0074aa0ee83956109c2e, type: 3}
+  m_SortingLayerID: 49285961
+  m_SortingLayer: 6
+  m_SortingOrder: 6
+  m_Sprite: {fileID: -1882245094, guid: 9d43b57e9ba72324386c1288cd85e931, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.2, y: 1.32}
+  m_Size: {x: 0.27142859, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b4b6ab4a9b8864d847951082f2c301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 4
-  despawnTimer: 1
+  bulletSpeed: 2
+  despawnTimer: 0.5
 --- !u!58 &1188178333361489658
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -113,6 +113,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.59999996, y: 0.6825036}
+  m_Offset: {x: -0.0059738476, y: 0.015054058}
   serializedVersion: 2
-  m_Radius: 0.6374964
+  m_Radius: 0.11934514

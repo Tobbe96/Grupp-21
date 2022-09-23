@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 5223119701094148515}
   - component: {fileID: -7454521449364229083}
   m_Layer: 0
-  m_Name: Enemy_Shooting
+  m_Name: Enemy_Turret
   m_TagString: Enemy01
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 1275970110, guid: 3c61200244c4c174db54f91814bec81c, type: 3}
+  m_Sprite: {fileID: -1882245094, guid: 9d43b57e9ba72324386c1288cd85e931, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -134,7 +134,7 @@ Animator:
   m_GameObject: {fileID: 5223119701094148506}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e347eecde2b5614478b7a2b69ef3e15f, type: 2}
+  m_Controller: {fileID: 9100000, guid: cbd36f91a53da9346b3fa69db4f3720b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -182,7 +182,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.6333333, y: 0.53333336}
+    oldSize: {x: 0.31428573, y: 0.22857143}
     newSize: {x: 1.45, y: 1.05}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -301,18 +301,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidBody2D: {fileID: 5223119701094148518}
   player: {fileID: 0}
-  canMove: 1
+  canMove: 0
   moveSpeed: 0.3
   movementDirection: 1
   groundCheckPoint: {fileID: 5223119700291609560}
   groundCheck: {fileID: 0}
   canChase: 0
   chaseSpeedMultiplier: 3
-  chaseDistance: 10
+  chaseDistance: 4
   canShoot: 1
   bulletPrefab: {fileID: 5165044221721329845, guid: c09d3b7a2f6500f488b731558d30d663, type: 3}
-  projectileAmount: 5
-  projectileRadius: 190
+  projectileAmount: 6
+  projectileRadius: 360
 --- !u!114 &7999773888804630445
 MonoBehaviour:
   m_ObjectHideFlags: 0

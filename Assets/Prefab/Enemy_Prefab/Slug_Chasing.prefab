@@ -79,9 +79,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: 49285961
+  m_SortingLayer: 6
+  m_SortingOrder: 7
   m_Sprite: {fileID: -1339555480, guid: 9d43b57e9ba72324386c1288cd85e931, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -147,18 +147,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0049591064, y: 0.02162826}
+  m_Offset: {x: 0.010611534, y: 0.00216496}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.3, y: 0.95}
+    oldSize: {x: 0.6571429, y: 0.27142859}
     newSize: {x: 1.45, y: 1.05}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.229271, y: 0.9320359}
+  m_Size: {x: 0.64829516, y: 0.2633164}
   m_EdgeRadius: 0
 --- !u!82 &4897495246013979438
 AudioSource:
@@ -285,13 +285,13 @@ MonoBehaviour:
   rigidBody2D: {fileID: 4897495244340923475}
   player: {fileID: 0}
   canMove: 1
-  moveSpeed: 2
+  moveSpeed: 0.3
   movementDirection: 1
   groundCheckPoint: {fileID: 4897495245684295213}
   groundCheck: {fileID: 0}
   canChase: 1
-  chaseSpeedMultiplier: 3
-  chaseDistance: 10
+  chaseSpeedMultiplier: 2
+  chaseDistance: 3
   canShoot: 0
   bulletPrefab: {fileID: 5165044221721329845, guid: c09d3b7a2f6500f488b731558d30d663, type: 3}
   projectileAmount: 6
@@ -350,7 +350,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4897495245684295213}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.084, y: -0.47, z: 0}
+  m_LocalPosition: {x: 0.344, y: -0.165, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

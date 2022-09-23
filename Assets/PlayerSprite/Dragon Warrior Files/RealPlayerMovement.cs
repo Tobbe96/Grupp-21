@@ -428,6 +428,13 @@ public class RealPlayerMovement : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + Vector3.right * wallRaycastLength);
         Gizmos.DrawLine(transform.position, transform.position + Vector3.left * wallRaycastLength);
     }
+    public bool IsFalling() {
+        if (theRB.velocity.y < 0f)
+        {
+            return true;
+        }
+        return false;
+    }
 
     public bool canAttack()
     {
