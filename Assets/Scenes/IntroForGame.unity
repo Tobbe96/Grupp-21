@@ -18394,7 +18394,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6097712736214691464, guid: 6b61198b3d399534eb7400d092d7b3df, type: 3}
       propertyPath: m_Name
-      value: Canvas (1)
+      value: Pause
       objectReference: {fileID: 0}
     - target: {fileID: 6097712736214691464, guid: 6b61198b3d399534eb7400d092d7b3df, type: 3}
       propertyPath: m_IsActive
