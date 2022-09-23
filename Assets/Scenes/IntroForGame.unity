@@ -925,6 +925,18 @@ PrefabInstance:
       propertyPath: useStartPosition
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176011, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586860995260176011, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 5364a1f825edd4bf48fb1d23a780a1d3, type: 2}
+    - target: {fileID: 7586860995260176012, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7586860995260176019, guid: 51fcfbab4e7624351ace3539068b4e01, type: 3}
       propertyPath: fireballs.Array.data[0]
       value: 
@@ -12319,7 +12331,7 @@ GameObject:
   - component: {fileID: 1000422880}
   - component: {fileID: 1000422881}
   m_Layer: 0
-  m_Name: Low_Collider_Enemy (1)
+  m_Name: Low_Collider_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
