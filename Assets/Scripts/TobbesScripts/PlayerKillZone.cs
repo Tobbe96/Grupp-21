@@ -6,7 +6,12 @@ public class PlayerKillZone : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") == true)
+        if (collision.CompareTag("Enemy01"))
+        {
+            Destroy(collision.gameObject.transform.parent.gameObject);
+        }
+
+        if (collision.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerState>().Respawn();
         }

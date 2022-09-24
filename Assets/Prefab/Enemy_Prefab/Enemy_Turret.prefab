@@ -160,11 +160,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 40e3f706de9cb16479fa854942891aeb, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!61 &5223119701094148517
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -308,7 +308,7 @@ MonoBehaviour:
   groundCheck: {fileID: 0}
   canChase: 0
   chaseSpeedMultiplier: 3
-  chaseDistance: 4
+  chaseDistance: 3
   canShoot: 1
   bulletPrefab: {fileID: 5165044221721329845, guid: c09d3b7a2f6500f488b731558d30d663, type: 3}
   projectileAmount: 6
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  maxHealth: 2
+  maxHealth: 1
 --- !u!114 &5223119701094148515
 MonoBehaviour:
   m_ObjectHideFlags: 0

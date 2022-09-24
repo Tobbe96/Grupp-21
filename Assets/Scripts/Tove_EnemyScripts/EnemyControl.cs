@@ -59,7 +59,7 @@ public class EnemyControl : MonoBehaviour
             return;
         }
 
-        if (canChase && IsPlayerInRange() && Mathf.Abs(player.transform.position.y - transform.position.y) < 3)
+        if (canChase && IsPlayerInRange() && Mathf.Abs(player.transform.position.y - transform.position.y) < 2)
         {
             ChasePlayer();
             return;

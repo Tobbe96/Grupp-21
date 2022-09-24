@@ -308,7 +308,7 @@ MonoBehaviour:
   groundCheck: {fileID: 0}
   canChase: 0
   chaseSpeedMultiplier: 3
-  chaseDistance: 10
+  chaseDistance: 3
   canShoot: 1
   bulletPrefab: {fileID: 5165044221721329845, guid: c09d3b7a2f6500f488b731558d30d663, type: 3}
   projectileAmount: 5
