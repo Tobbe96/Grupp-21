@@ -15,21 +15,24 @@ public class ChestNPC : MonoBehaviour
     public bool playerIsClose;
 
     public GameObject nextButton;
+    private bool _isInteracting = false;
 
 
     void OnTriggerStay2D(Collider2D col)
     {
         {
-            if (Input.GetKeyDown(KeyCode.E) && playerIsClose && col.GetComponent<PlayerState>().isQuestComplete)
+            if (Input.GetKey(KeyCode.E) && playerIsClose && col.GetComponent<PlayerState>().isQuestComplete)
             {
+                if (_isInteracting) return;
                 if (Panel.activeInHierarchy)
                 {
                     zeroText();
                 }
-                else
+                else 
                 {
-                    Panel.SetActive(true);
-                    StartCoroutine(Typing());
+
+                        Panel.SetActive(true);
+                        StartCoroutine(Typing());
                 }
             }
 
@@ -49,11 +52,13 @@ public class ChestNPC : MonoBehaviour
 
         IEnumerator Typing()
         {
+            _isInteracting = true;
             foreach (char letter in dialouge[index].ToCharArray())
             {
                 dialougeText.text += letter;
                 yield return new WaitForSeconds(wordSpeed);
             }
+            _isInteracting = false;
         }
 
         public void NextLine()
@@ -89,6 +94,8 @@ public class ChestNPC : MonoBehaviour
                 zeroText();
             }
         }
+
+
     }
 
 
