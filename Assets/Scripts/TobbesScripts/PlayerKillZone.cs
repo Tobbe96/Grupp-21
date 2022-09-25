@@ -8,7 +8,7 @@ public class PlayerKillZone : MonoBehaviour
     {
         if (collision.CompareTag("Enemy01"))
         {
-            Destroy(collision.gameObject.transform.parent.gameObject);
+            Destroy(collision.gameObject);
         }
 
         if (collision.CompareTag("Player"))
